@@ -1,11 +1,16 @@
 #pragma once
 #include <QMainWindow>
-#include <QGraphicsView>
+#include "View.h"
+#include "Player.h"
+#include "Model.h"
 
-class GameWindow : public QMainWindow
-{
+class GameWindow : public QMainWindow {
 public:
     GameWindow();
+    void keyPressEvent(QKeyEvent* event) override;
+    void keyReleaseEvent(QKeyEvent* event) override;
+    void updateFrame();
 private:
-    QGraphicsView* view;
+    View* view;
+    std::unique_ptr<Model> model;
 };
