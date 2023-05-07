@@ -10,6 +10,7 @@ View::View(QWidget* parent) : QGraphicsView(parent) {
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setDragMode(QGraphicsView::NoDrag);
     setFrameShape(QGraphicsView::NoFrame);
+    scale(1, -1);
     const int maxSize = 10000;
     scene = new QGraphicsScene(-maxSize, -maxSize, 2 * maxSize, 2 * maxSize, this);
     scene->addLine(-maxSize, 0, maxSize, 0, {Qt::red});

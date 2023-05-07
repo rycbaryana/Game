@@ -20,13 +20,7 @@ void MovableObject::move() {
     auto length = sqrt(QPointF::dotProduct(direction_, direction_));
     if (length == 0) return;
     pos_.setX(pos_.x() + speed_ * direction_.x() / length);
-    pos_.setY(pos_.y() - speed_ * direction_.y() / length);
+    pos_.setY(pos_.y() + speed_ * direction_.y() / length);
 }
 
-void MovableObject::setMove(bool move) {
-    move_ = move;
-}
-
-bool MovableObject::isMoving() {
-    return move_;
-}
+MovableObject::MovableObject() : speed_(), direction_() {}

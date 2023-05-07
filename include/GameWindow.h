@@ -9,6 +9,7 @@ public:
     GameWindow();
     void keyPressEvent(QKeyEvent* event) override;
     void keyReleaseEvent(QKeyEvent* event) override;
+    void mousePressEvent(QMouseEvent* event) override;
     void updateFrame();
 private:
     View* view;

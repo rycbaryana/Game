@@ -19,3 +19,7 @@ void Creature::heal(int heal) {
 void Creature::damage(int damage) {
     health_ = std::max(health_ - damage, 0);
 }
+
+Creature::Creature(int maxHealth) : maxHealth_(maxHealth), health_(maxHealth) { }
+
+Creature::Creature() : Creature(0) { }
