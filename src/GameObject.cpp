@@ -8,3 +8,7 @@ void GameObject::setPosition(double x, double y) {
 const QPointF& GameObject::getPos() const {
     return pos_;
 }
+
+GameObject::GameObject() : pos_() { }
+
+GameObject::GameObject(const QPointF& pos) : pos_(pos) { }
