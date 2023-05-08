@@ -12,4 +12,5 @@ public:
     double getSpeed() const;
     const QPointF& getDirection() const;
     void move();
+    void move(double speed, const QPointF& direction);
 };
