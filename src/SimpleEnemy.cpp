@@ -1,7 +1,7 @@
 #include "SimpleEnemy.h"
 #include <QPainter>
 
-SimpleEnemy::SimpleEnemy() : Enemy(50) {
+SimpleEnemy::SimpleEnemy() : Enemy(1, 20) {
     speed_ = 1;
 }
 
@@ -19,4 +19,5 @@ QRectF SimpleEnemy::boundingRect() const {
 
 SimpleEnemy::SimpleEnemy(const QPointF& pos) : SimpleEnemy() {
     pos_ = pos;
+    setPos(pos);
 }

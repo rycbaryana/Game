@@ -17,10 +17,13 @@ const QPointF& MovableObject::getDirection() const {
 }
 
 void MovableObject::move() {
-    auto length = sqrt(QPointF::dotProduct(direction_, direction_));
-    if (length == 0) return;
-    pos_.setX(pos_.x() + speed_ * direction_.x() / length);
-    pos_.setY(pos_.y() + speed_ * direction_.y() / length);
+    move(speed_, direction_);
 }
 
 MovableObject::MovableObject() : speed_(), direction_() {}
+
+void MovableObject::move(double speed, const QPointF& direction) {
+    auto length = vecLength(direction);
+    if (length == 0) return;
+    setPosition({pos_.x() + speed * direction.x() / length, pos_.y() + speed * direction.y() / length});
+}
