@@ -6,8 +6,10 @@
 class Model {
 public:
     Model();
-    void updateModel();
     Player* player;
     std::vector<Enemy*> enemies;
     std::vector<Projectile*> projectiles;
+
+    void updateModel();
+    void itemPickUp(Item* item);
 };

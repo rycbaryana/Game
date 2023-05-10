@@ -14,10 +14,10 @@ find_package(Qt6 COMPONENTS
         Widgets
         REQUIRED)
 
-file(GLOB SRC src/*.cpp)
+file(GLOB_RECURSE SRC src/*.cpp)
 
 add_executable(Game ${SRC})
-include_directories(Game include)
+include_directories(Game include include/Graphics include/Objects include/Upgrades)
 target_link_libraries(Game
         Qt::Core
         Qt::Gui
