@@ -5,8 +5,8 @@
 #include "Model.h"
 
 class GameWindow : public QMainWindow {
-    const int size = 400;
 public:
+    static const int size = 400;
     GameWindow();
     void keyPressEvent(QKeyEvent* event) override;
     void keyReleaseEvent(QKeyEvent* event) override;

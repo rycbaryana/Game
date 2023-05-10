@@ -1,5 +1,6 @@
 #pragma once
 #include <QGraphicsView>
+#include "PlayerHUD.h"
 
 class View : public QGraphicsView {
 public:
@@ -7,4 +8,5 @@ public:
     void wheelEvent(QWheelEvent* event) override;
 
     QGraphicsScene* scene;
+    PlayerHUD* hud;
 };

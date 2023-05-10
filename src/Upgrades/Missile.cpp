@@ -50,7 +50,7 @@ Missile::Missile() {
     baseDamage_ = 10;
     cooldown_ = 1000;
     amount_ = 1;
-    speed_ = 3;
+    speed_ = 5;
 }
 
 void Missile::levelUp() { }

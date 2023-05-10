@@ -1,7 +1,7 @@
 #include "SimpleEnemy.h"
 #include <QPainter>
 
-SimpleEnemy::SimpleEnemy() : Enemy(1, 20) {
+SimpleEnemy::SimpleEnemy() : Enemy(1, 10, xp1) {
     speed_ = 1;
 }
 

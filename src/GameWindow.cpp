@@ -1,5 +1,6 @@
 #include "GameWindow.h"
 #include "SimpleEnemy.h"
+#include "PlayerHUD.h"
 #include <QGraphicsLineItem>
 #include <QKeyEvent>
 #include <QTimer>
@@ -9,6 +10,10 @@ GameWindow::GameWindow() : QMainWindow(), view(new View(this)), model(std::make_
     resize(2 * size, 2 * size);
 
     view->scene->addItem(model->player);
+    view->setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
+
+    auto* hud = new PlayerHUD(model->player, view);
+    view->hud = hud;
 
     auto* timer = new QTimer(this);
     connect(timer, &QTimer::timeout, [this]() { updateFrame(); });
@@ -41,38 +46,13 @@ void GameWindow::keyReleaseEvent(QKeyEvent* event) {
 
 void GameWindow::updateFrame() {
     model->updateModel();
-    auto& projectiles = model->projectiles;
-    auto& enemies = model->enemies;
-    auto& weapons = model->player->getWeapons();
-    for (auto* enemy : enemies) {
-        if (!enemy->isAlive()) {
-            std::erase_if(enemies, [enemy](auto obj) { return enemy == obj; });
-            view->scene->removeItem(enemy);
-        }
-    }
-    for (auto* projectile : projectiles) {
-        if (vecLength(projectile->getPos() - model->player->getPos()) > sqrt(2) * size) {
-            std::erase_if(projectiles, [projectile](auto obj) { return obj == projectile; });
-            view->scene->removeItem(projectile);
-            continue;
-        }
-        auto collidingEnemies = getCollision<Enemy>(projectile);
-        if (!collidingEnemies.empty()) {
-            auto* enemy = collidingEnemies.front();
-            enemy->damage(projectile->getDamage());
-            std::erase_if(projectiles, [projectile](auto obj) { return obj == projectile; });
-            view->scene->removeItem(projectile);
-        }
-    }
-    for (auto& weapon : weapons) {
-        auto* projectile = weapon->activateWeapon(model->player->getPos(), enemies);
+
+    for (auto& weapon : model->player->getWeapons()) {
+        auto* projectile = weapon->activateWeapon(model->player->getPos(), model->enemies);
         if (projectile == nullptr)
             continue;
-        projectiles.push_back(projectile);
+        model->projectiles.push_back(projectile);
         view->scene->addItem(projectile);
-    }
-    if (!model->player->isAlive()) {
-        close();
     }
     view->centerOn(model->player);
     view->scene->update();
