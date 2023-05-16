@@ -29,6 +29,7 @@ QPainterPath MissileProjectile::shape() const {
 Projectile* Missile::activateWeapon(const QPointF& pos, const std::vector<Enemy*>& enemies) {
     if (!isReady() || enemies.empty()) return nullptr;
     auto* projectile = new MissileProjectile(baseDamage_, speed_);
+    ++currentAmount_;
     Enemy* closestEnemy = *std::min_element(
         enemies.begin(), enemies.end(),
         [&](const auto lhs, const auto rhs) {
@@ -42,15 +43,26 @@ Projectile* Missile::activateWeapon(const QPointF& pos, const std::vector<Enemy*
     return projectile;
 }
 
-QString Missile::description() const {
-    return "Missile";
-}
-
 Missile::Missile() {
     baseDamage_ = 10;
     cooldown_ = 1000;
     amount_ = 1;
-    speed_ = 5;
+    delay_ = 100;
+    speed_ = 7;
+    level_ = 0;
+    levelDescription.push_back("Missile lvl 1");
+    levelDescription.push_back("Missile lvl 2");
+    levelDescription.push_back("Missile lvl 3");
+    levelDescription.push_back("Missile lvl 4");
+    levelDescription.push_back("Missile lvl 5");
+    levelDescription.push_back("Missile lvl 6");
+    levelDescription.push_back("Missile lvl 7");
+    levelDescription.push_back("Missile lvl 8");
 }
 
-void Missile::levelUp() { }
+void Missile::levelUp() {
+    ++level_;
+    if (level_ == 2) {
+        ++amount_;
+    }
+}

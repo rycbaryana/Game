@@ -1,7 +1,13 @@
 #include "Model.h"
 #include "GameWindow.h"
+#include <QFile>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
 
 Model::Model() : player(new Player) {
+    loadWaves();
+    loadEnemies();
 }
 
 void Model::updateModel() {
@@ -29,7 +35,7 @@ void Model::updateModel() {
     }
     for (auto*& projectile : projectiles) {
         projectile->move();
-        if (vecLength(projectile->getPos() - player->getPos()) > sqrt(2) * GameWindow::size) {
+        if (vecLength(projectile->getPos() - player->getPos()) > sqrt(2) * qMax(width, height)) {
             delete projectile;
             projectile = nullptr;
             continue;
@@ -47,15 +53,51 @@ void Model::updateModel() {
         }
     }
     erase_if(projectiles, [](auto* obj){return obj == nullptr;});
-    for (auto* item : getCollision<Item>(player)) {
-        itemPickUp(item);
-        delete item;
-    }
 }
 
 void Model::itemPickUp(Item* item) {
     auto type = item->getType();
     if (type == xp1 || type == xp5 || type == xp10) {
-        player->addXp(static_cast<int>(type));
+         player->addXp(static_cast<int>(type));
     }
+}
+
+void Model::loadWaves() {
+    QFile wavesFile(":/json/waves.json");
+    wavesFile.open(QIODevice::ReadOnly);
+    QJsonDocument wavesJson(QJsonDocument::fromJson(wavesFile.readAll()));
+    QJsonArray wavesArray = wavesJson.array();
+    for (int i = 0; i < wavesArray.size(); ++i) {
+        auto waveObj = wavesArray[i].toObject();
+        Wave wave{i, waveObj["delay"].toInt(), waveObj["minAmount"].toInt(), {}};
+        auto ids = waveObj["enemies"].toArray();
+        for (auto id : ids) {
+            wave.enemiesId.push_back(id.toInt());
+        }
+        waves.push_back(wave);
+    }
+
+    wavesFile.close();
+}
+
+Enemy* Model::newEnemy(int id, const QPointF& pos) {
+    auto* enemy = new Enemy(id, pos);
+    enemy->setStats(enemiesTable[id]);
+    return enemy;
+}
+
+void Model::loadEnemies() {
+    QFile enemiesFile(":/json/enemies.json");
+    enemiesFile.open(QIODevice::ReadOnly);
+    QJsonDocument enemiesJson(QJsonDocument::fromJson(enemiesFile.readAll()));
+    QJsonArray enemiesArr = enemiesJson.array();
+    for (int i = 0; i < enemiesArr.size(); ++i) {
+        auto enemy = enemiesArr[i].toObject();
+        enemiesTable[i] = {};
+        enemiesTable[i].push_back(enemy["baseDamage"].toInt());
+        enemiesTable[i].push_back(enemy["maxHealth"].toInt());
+        enemiesTable[i].push_back(enemy["speed"].toDouble());
+        enemiesTable[i].push_back(enemy["xp"].toInt());
+    }
+    enemiesFile.close();
 }

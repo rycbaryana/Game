@@ -1,14 +1,14 @@
 #pragma once
 #include <QGraphicsItem>
 #include "Player.h"
-#include "GameWindow.h"
 
 class XpBar : public QGraphicsItem {
-    const int height = 20;
-    const int width = 2 * GameWindow::size;
+    const int height_ = 20;
+    int width_;
     Player* player_;
 public:
-    explicit XpBar(Player* player, QGraphicsItem* parent = nullptr) : QGraphicsItem(parent), player_(player) {}
+    explicit XpBar(Player* player, int width) : player_(player), width_(width) {}
     QRectF boundingRect() const override;
+    void setWidth(int width);
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 };

@@ -15,8 +15,9 @@ find_package(Qt6 COMPONENTS
         REQUIRED)
 
 file(GLOB_RECURSE SRC src/*.cpp)
+file(GLOB_RECURSE HEADERS include/*.h)
 
-add_executable(Game ${SRC})
+add_executable(Game ${SRC} ${HEADERS} resources.qrc)
 include_directories(Game include include/Graphics include/Objects include/Upgrades)
 target_link_libraries(Game
         Qt::Core

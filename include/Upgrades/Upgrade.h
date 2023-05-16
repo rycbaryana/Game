@@ -2,8 +2,11 @@
 #include <QString>
 
 class Upgrade {
+public:
+    virtual void levelUp() = 0;
+    int getLevel() const {return level_;};
+
+    std::vector<QString> levelDescription;
 protected:
     int level_ = 0;
-    virtual void levelUp() = 0;
-    virtual QString description() const = 0;
 };

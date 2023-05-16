@@ -1,0 +1,6 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+<file>json/enemies.json</file>
+<file>json/waves.json</file>
+</qresource>
+</RCC>
