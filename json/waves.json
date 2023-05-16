@@ -1,0 +1,16 @@
+[
+  {
+    "delay" : 1000,
+    "minAmount" : 15,
+    "enemies" : [
+      0
+    ]
+  },
+  {
+    "delay" : 1000,
+    "minAmount" : 20,
+    "enemies" : [
+      0
+    ]
+  }
+]

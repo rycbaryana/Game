@@ -5,7 +5,6 @@ class Missile : public Weapon {
 public:
     Missile();
     Projectile* activateWeapon(const QPointF& pos, const std::vector<Enemy*>& enemies) override;
-    QString description() const override;
     void levelUp() override;
 };
 

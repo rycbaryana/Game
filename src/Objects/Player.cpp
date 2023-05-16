@@ -4,15 +4,18 @@
 #include <QPainter>
 #include "XpBar.h"
 
-Player::Player() : Creature(100), neededXp(81) {
+Player::Player() : Creature(100), neededXp(maxLevel + 1) {
     speed_ = 5;
-    weapons_.push_back(std::make_unique<Missile>());
+
+    auto* missile = new Missile;
+    missile->levelUp();
+    possibleWeapons.push_back(std::shared_ptr<Missile>(missile));
+    weapons_.push_back(possibleWeapons.front());
+
+
 
     auto* hpBar = new HpBar(this);
     hpBar->setPos(0, -boundingRect().height() / 2 - hpBar->boundingRect().height() / 2 - 5);
-
-    auto* xpBar = new XpBar(this);
-    xpBar->setPos(0, 400 - xpBar->boundingRect().height() / 2);
 
     int inc = 10;
     neededXp[1] = 5;
@@ -30,10 +33,10 @@ void Player::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QW
 }
 
 QRectF Player::boundingRect() const {
-    return QRectF(-25 - 1, -25 - 1, 50 + 2, 50 + 2);
+    return QRectF(-25, -25,50, 50);
 }
 
-const std::vector<std::unique_ptr<Weapon>>& Player::getWeapons() {
+const std::vector<std::shared_ptr<Weapon>>& Player::getWeapons() {
     return weapons_;
 }
 
@@ -49,6 +52,6 @@ void Player::addXp(int xp) {
     }
 }
 
-int Player::getLevel() {
+int Player::getLevel() const {
     return level_;
 }

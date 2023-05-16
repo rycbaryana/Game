@@ -17,7 +17,12 @@ double Weapon::getSpeed() const {
 }
 
 void Weapon::startCooldown() {
-    timer_->setRemainingTime(cooldown_);
+    if (currentAmount_ == amount_) {
+        currentAmount_ = 0;
+        timer_->setRemainingTime(cooldown_);
+    } else {
+        timer_->setRemainingTime(delay_);
+    }
 }
 
 bool Weapon::isReady() {

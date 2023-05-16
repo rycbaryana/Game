@@ -10,6 +10,8 @@ View::View(QWidget* parent) : QGraphicsView(parent) {
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setDragMode(QGraphicsView::NoDrag);
     setFrameShape(QGraphicsView::NoFrame);
+    setRenderHints(QPainter::Antialiasing| QPainter::SmoothPixmapTransform);
+    setFocusPolicy(Qt::NoFocus);
     scale(1, -1);
     const int maxSize = 10000;
     scene = new QGraphicsScene(-maxSize, -maxSize, 2 * maxSize, 2 * maxSize, this);

@@ -5,14 +5,21 @@
 
 class Enemy : public Creature {
     const int delay_ = 200;
-protected:
+
     int baseDamage_;
     ItemType xp_;
+    int id_;
     std::unique_ptr<QDeadlineTimer> timer_;
+
 public:
-    Enemy(int baseDamage, int maxHealth, ItemType xp);
+    Enemy(int id, const QPointF& pos);
     ~Enemy();
+    QRectF boundingRect() const override;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
+               QWidget *widget) override;
     void attack(Creature*);
     int getDamage() const;
+    int getId() const;
+    void setStats(const std::vector<double>& stats);
     Item* dropXp();
 };

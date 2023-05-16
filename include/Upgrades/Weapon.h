@@ -9,6 +9,8 @@ protected:
     int baseDamage_;
     int cooldown_;
     int amount_;
+    int currentAmount_ = 0;
+    int delay_;
     double speed_;
     std::unique_ptr<QDeadlineTimer> timer_;
 public:

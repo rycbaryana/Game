@@ -1,0 +1,9 @@
+[
+  {
+    "id" : 0,
+    "baseDamage" : 1,
+    "maxHealth" : 10,
+    "xp" : 1,
+    "speed" : 1
+  }
+]
