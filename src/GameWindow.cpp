@@ -50,6 +50,9 @@ void GameWindow::keyPressEvent(QKeyEvent* event) {
     if (keys.contains(key)) {
         model->player->setDirection(keys[key]);
     }
+    if (key == Qt::Key_Escape) {
+        close();
+    }
 }
     
 void GameWindow::keyReleaseEvent(QKeyEvent* event) {
@@ -68,7 +71,9 @@ void GameWindow::updateFrame() {
     model->updateModel();
     auto& enemies = model->enemies;
     for (auto& weapon : model->player->getWeapons()) {
-        auto* projectile = weapon->activateWeapon(model->player->getPos(), model->enemies);
+        if (weapon->getLevel() == 0)
+            continue ;
+        auto* projectile = weapon->activateWeapon(model->enemies);
         if (projectile == nullptr)
             continue;
         model->projectiles.push_back(projectile);
@@ -83,6 +88,7 @@ void GameWindow::updateFrame() {
     if (model->player->getLevel() != level) {
         upgradeMenu->showMenu();
     }
+    if (!model->player->isAlive()) close();
 
     view->centerOn(model->player);
     view->scene->update();

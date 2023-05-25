@@ -4,6 +4,7 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include "XpItem.h"
 
 Model::Model() : player(new Player) {
     loadWaves();
@@ -30,35 +31,42 @@ void Model::updateModel() {
             auto dir = enemy->getPos() - collidingEnemy->getPos();
             dst = vecLength(dir);
             minDst = (enemy->boundingRect().width() + collidingEnemy->boundingRect().width()) / 2 + 1;
-            collidingEnemy->move(qMin(3.0, qPow(minDst / dst, 5)) * collidingEnemy->getSpeed(), -dir);
+            collidingEnemy->move(qMin(3.0, qPow(minDst / dst, 5)) * collidingEnemy->getSpeed(), -dir, false);
         }
     }
+    auto pred = [](auto* obj){return obj == nullptr;};
     for (auto*& projectile : projectiles) {
         projectile->move();
-        if (vecLength(projectile->getPos() - player->getPos()) > sqrt(2) * qMax(width, height)) {
+        if (vecLength(projectile->getPos() - player->getPos()) > sqrt(2) * qMax(width, height) || projectile->hasExpired()) {
             delete projectile;
             projectile = nullptr;
             continue;
         }
         auto collidingEnemies = getCollision<Enemy>(projectile);
         if (!collidingEnemies.empty()) {
-            auto* enemy = collidingEnemies.front();
-            enemy->damage(projectile->getDamage());
-            if (!enemy->isAlive()) {
-                erase_if(enemies, [enemy](auto* obj) {return enemy == obj;});
-                delete enemy;
+            size_t size = collidingEnemies.size();
+            for (size_t i = 0; (projectile->canKill() || projectile->getPierce() == 0) && i < size; ++i) {
+                auto* enemy = collidingEnemies[i];
+                enemy->damage(projectile->getDamage());
+                if (!enemy->isAlive()) {
+                    erase_if(enemies, [enemy](auto* obj) {return enemy == obj;});
+                    delete enemy;
+                }
+                projectile->increasePierced();
             }
-            delete projectile;
-            projectile = nullptr;
+            if (projectile->isForever() && !projectile->canKill()) {
+                delete projectile;
+                projectile = nullptr;
+            }
         }
     }
-    erase_if(projectiles, [](auto* obj){return obj == nullptr;});
+    erase_if(projectiles, pred);
 }
 
 void Model::itemPickUp(Item* item) {
     auto type = item->getType();
-    if (type == xp1 || type == xp5 || type == xp10) {
-         player->addXp(static_cast<int>(type));
+    if (type == xp) {
+         player->addXp(dynamic_cast<XpItem*>(item)->getXp());
     }
 }
 

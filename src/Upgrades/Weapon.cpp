@@ -1,15 +1,15 @@
 #include "Weapon.h"
 
 int Weapon::getDamage() const {
-    return baseDamage_;
+    return baseDamage_ * player_->dmgBonus;
 }
 
 int Weapon::getCooldown() const {
-    return cooldown_;
+    return cooldown_ * (1 - player_->cooldownReduction);
 }
 
 int Weapon::getAmount() const {
-    return amount_;
+    return amount_ + player_->amountBonus;
 }
 
 double Weapon::getSpeed() const {
@@ -17,9 +17,9 @@ double Weapon::getSpeed() const {
 }
 
 void Weapon::startCooldown() {
-    if (currentAmount_ == amount_) {
+    if (currentAmount_ == getAmount()) {
         currentAmount_ = 0;
-        timer_->setRemainingTime(cooldown_);
+        timer_->setRemainingTime(getCooldown());
     } else {
         timer_->setRemainingTime(delay_);
     }

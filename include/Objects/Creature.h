@@ -13,4 +13,5 @@ public:
     int getMaxHealth() const;
     void heal(int);
     void damage(int);
+    void addMaxHealth(int);
 };

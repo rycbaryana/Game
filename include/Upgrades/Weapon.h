@@ -3,6 +3,7 @@
 #include "Projectile.h"
 #include <QDeadlineTimer>
 #include "Enemy.h"
+#include "AbstractPlayer.h"
 
 class Weapon : public Upgrade {
 protected:
@@ -11,6 +12,8 @@ protected:
     int amount_;
     int currentAmount_ = 0;
     int delay_;
+    int duration_;
+    int pirce_;
     double speed_;
     std::unique_ptr<QDeadlineTimer> timer_;
 public:
@@ -21,6 +24,6 @@ public:
     double getSpeed() const;
     void startCooldown();
     bool isReady();
-    virtual Projectile* activateWeapon(const QPointF& pos, const std::vector<Enemy*>&) = 0;
+    virtual Projectile* activateWeapon(const std::vector<Enemy*>&) = 0;
     virtual ~Weapon() = default;
 };

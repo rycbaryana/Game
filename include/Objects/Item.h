@@ -2,10 +2,9 @@
 #include "GameObject.h"
 
 enum ItemType {
-    xp1 = 1,
-    xp5 = 5,
-    xp10 = 10,
+    xp,
     destruction,
+    vacuum
 };
 
 class Item : public GameObject {

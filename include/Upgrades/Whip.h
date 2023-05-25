@@ -1,17 +1,19 @@
 #pragma once
 #include "Weapon.h"
+#include "Enemy.h"
 
-class Missile : public Weapon {
+class Whip : public Weapon {
 public:
-    explicit Missile(AbstractPlayer* player);
+    explicit Whip(AbstractPlayer* player);
     Projectile* activateWeapon(const std::vector<Enemy*>& enemies) override;
     void levelUp() override;
 };
 
-class MissileProjectile : public Projectile {
-    const int size = 20;
+class WhipProjectile : public Projectile {
+    const int width = 147 * 1.5;
+    const int height = 22 * 1.5;
 public:
-    MissileProjectile(int damage, double speed, int pierce) : Projectile(damage, speed, 0, pierce) {};
+    WhipProjectile(int damage, double speed, int duration, int pierce);
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
     QRectF boundingRect() const override;
     QPainterPath shape() const override;

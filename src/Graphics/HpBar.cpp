@@ -1,7 +1,7 @@
 #include "HpBar.h"
 
 QRectF HpBar::boundingRect() const {
-    return QRectF(-creature_->boundingRect().width() / 2, -5, creature_->boundingRect().width(), 10);
+    return QRectF(-creature_->boundingRect().width() / 2, -3.5, creature_->boundingRect().width(), 7);
 }
 
 void HpBar::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) {
