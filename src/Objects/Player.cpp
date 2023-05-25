@@ -1,57 +1,59 @@
 #include "Player.h"
 #include "HpBar.h"
 #include "Missile.h"
+#include "Whip.h"
 #include <QPainter>
-#include "XpBar.h"
 
-Player::Player() : Creature(100), neededXp(maxLevel + 1) {
-    speed_ = 5;
+Player::Player() : AbstractPlayer() {
+    speed_ = 2;
 
-    auto* missile = new Missile;
-    missile->levelUp();
-    possibleWeapons.push_back(std::shared_ptr<Missile>(missile));
-    weapons_.push_back(possibleWeapons.front());
+    weapons_.push_back(std::make_shared<Whip>(this));
+    weapons_.push_back(std::make_shared<Missile>(this));
+    weapons_.front()->levelUp();
 
+    passives_.push_back(std::make_shared<PassiveUpgrade>(Damage, this));
+    passives_.push_back(std::make_shared<PassiveUpgrade>(Amount, this));
 
+    AnimationManager anim(QPixmap(":/Antonio.png"), 4, speed_, 32, 34, 4);
+    setAnimation(anim);
 
     auto* hpBar = new HpBar(this);
     hpBar->setPos(0, -boundingRect().height() / 2 - hpBar->boundingRect().height() / 2 - 5);
-
-    int inc = 10;
-    neededXp[1] = 5;
-    for (int i = 2; i <= 80; ++i) {
-        if ((i - 1) % 20 == 0) {
-            inc += 3;
-        }
-        neededXp[i] = neededXp[i - 1] + inc;
-    }
 }
 
 void Player::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) {
-    painter->setPen({Qt::black, 2});
-    painter->drawRect(boundingRect());
+    //    painter->setPen({Qt::black, 2});
+    //    painter->drawRect(boundingRect());
+    painter->scale(1, -1);
+    QTransform inverse(sightDirection_.x() == 0 ? 1 : sightDirection_.x(), 0, 0, 0, 1, 0, 0, 0, 1);
+    painter->drawPixmap(
+        boundingRect().topLeft(), animation_.getCurrentFrame().transformed(inverse).scaled(47, 50)
+    );
 }
 
 QRectF Player::boundingRect() const {
-    return QRectF(-25, -25,50, 50);
+    return QRectF(-47. / 2, -25, 47, 50);
 }
 
 const std::vector<std::shared_ptr<Weapon>>& Player::getWeapons() {
     return weapons_;
 }
 
-int Player::getXp() {
-    return xp_;
+const std::vector<std::shared_ptr<PassiveUpgrade>>& Player::getPassives() {
+    return passives_;
 }
 
-void Player::addXp(int xp) {
-    xp_ += xp;
-    if (xp_ >= neededXp[level_]) {
-        xp_ -= neededXp[level_];
-        ++level_;
+std::vector<Upgrade*> Player::getPossibleUpgrades() {
+    std::vector<Upgrade*> possibleUpgrades;
+    for (auto& weapon : weapons_) {
+        if (weapon->getLevel() < weapon->maxLevel) {
+            possibleUpgrades.push_back(weapon.get());
+        }
     }
-}
-
-int Player::getLevel() const {
-    return level_;
+    for (auto& passive : passives_) {
+        if (passive->getLevel() < passive->maxLevel) {
+            possibleUpgrades.push_back(passive.get());
+        }
+    }
+    return possibleUpgrades;
 }

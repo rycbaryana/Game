@@ -12,8 +12,10 @@ void Enemy::attack(Creature* target) {
     timer_->setRemainingTime(delay_);
 }
 
-Item* Enemy::dropXp() {
-    return new Item(pos_, xp_);
+XpItem* Enemy::dropXp() {
+    auto* xp = new XpItem(pos_, xp_);
+    xp->setZValue(-1);
+    return xp;
 }
 
 Enemy::~Enemy() {
@@ -27,13 +29,12 @@ int Enemy::getId() const {
 void Enemy::paint(
     QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget
 ) {
-    painter->setPen({Qt::red, 1});
-    painter->setRenderHint(QPainter::Antialiasing);
-    painter->drawRect(boundingRect());
+    painter->scale(1, -1);
+    painter->drawPixmap(boundingRect().topLeft(), animation_.getCurrentFrame().scaled(40, 40));
 }
 
 QRectF Enemy::boundingRect() const {
-    return QRectF(-10, -10, 20, 20);
+    return QRectF(-20, -20, 40, 40);
 }
 
 Enemy::Enemy(int id, const QPointF& pos) : timer_(std::make_unique<QDeadlineTimer>()), id_(id){
@@ -46,5 +47,8 @@ void Enemy::setStats(const std::vector<double>& stats) {
     maxHealth_ = static_cast<int>(stats[1]);
     health_ = maxHealth_;
     speed_ = stats[2];
-    xp_ = static_cast<ItemType>(stats[3]);
+    xp_ = static_cast<int>(stats[3]);
+
+    AnimationManager anim(QPixmap(QString(":/enemy_%1.png").arg(id_)), 4, speed_, 25, 23, 0);
+    setAnimation(anim);
 }

@@ -1,13 +1,13 @@
 #pragma once
 #include "Creature.h"
 #include <QDeadlineTimer>
-#include "Item.h"
+#include "XpItem.h"
 
 class Enemy : public Creature {
     const int delay_ = 200;
 
     int baseDamage_;
-    ItemType xp_;
+    int xp_;
     int id_;
     std::unique_ptr<QDeadlineTimer> timer_;
 
@@ -21,5 +21,5 @@ public:
     int getDamage() const;
     int getId() const;
     void setStats(const std::vector<double>& stats);
-    Item* dropXp();
+    XpItem* dropXp();
 };

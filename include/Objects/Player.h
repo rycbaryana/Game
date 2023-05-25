@@ -1,21 +1,17 @@
 #pragma once
-#include "Creature.h"
+#include "AbstractPlayer.h"
 #include "Weapon.h"
+#include "PassiveUpgrade.h"
 
-class Player : public Creature {
-    const int maxLevel = 80;
-    int xp_ = 0;
-    int level_ = 1;
+class Player : public AbstractPlayer {
     std::vector<std::shared_ptr<Weapon>> weapons_;
+    std::vector<std::shared_ptr<PassiveUpgrade>> passives_;
 public:
-    std::vector<std::shared_ptr<Weapon>> possibleWeapons;
-    std::vector<int> neededXp;
-    int getXp();
-    void addXp(int xp);
-    int getLevel() const;
     Player();
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                QWidget *widget) override;
     QRectF boundingRect() const override;
     const std::vector<std::shared_ptr<Weapon>>& getWeapons();
+    const std::vector<std::shared_ptr<PassiveUpgrade>>& getPassives();
+    std::vector<Upgrade*> getPossibleUpgrades();
 };

@@ -1,6 +1,17 @@
 <!DOCTYPE RCC><RCC version="1.0">
 <qresource>
-<file>json/enemies.json</file>
-<file>json/waves.json</file>
+    <file>json/enemies.json</file>
+    <file>json/waves.json</file>
+    <file alias="Antonio.png">assets/player/Antonio.png</file>
+    <file alias="enemy_0.png">assets/enemies/enemy_0.png</file>
+    <file alias="background.png">assets/level/background.png</file>
+    <file alias="xp1.png">assets/player/xp1.png</file>
+    <file alias="xp2.png">assets/player/xp2.png</file>
+    <file alias="xp3.png">assets/player/xp3.png</file>
+    <file alias="Missile.png">assets/weapons/Missile.png</file>
+    <file alias="Whip.png">assets/weapons/Whip.png</file>
+    <file alias="frame_small.png">assets/ui/frame_small.png</file>
+    <file alias="arrow.png">assets/ui/arrow.png</file>
+    <file alias="slash.png">assets/weapons/slash.png</file>
 </qresource>
 </RCC>

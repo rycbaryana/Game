@@ -23,3 +23,7 @@ void Creature::damage(int damage) {
 Creature::Creature(int maxHealth) : maxHealth_(maxHealth), health_(maxHealth) { }
 
 Creature::Creature() : Creature(0) { }
+
+void Creature::addMaxHealth(int bonus) {
+    maxHealth_ += bonus;
+}
