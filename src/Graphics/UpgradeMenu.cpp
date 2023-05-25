@@ -14,7 +14,7 @@ void UpgradeMenu::generateUpgrades() {
     int padding = 10;
     auto upgrades = player_->getPossibleUpgrades();
     while (options_.size() < 3 && !upgrades.empty()) {
-        int upgradeIndex = QRandomGenerator::global()->bounded(upgrades.size());
+        int upgradeIndex = QRandomGenerator::global()->bounded(static_cast<int>(upgrades.size()));
         auto* option = new UpgradeOption(upgrades[upgradeIndex], this);
         option->setPos(padding, -option->boundingRect().height() + option->boundingRect().height() * options_.size());
         options_.push_back(option);
