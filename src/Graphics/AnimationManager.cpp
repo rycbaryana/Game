@@ -6,7 +6,7 @@ AnimationManager::AnimationManager(const QPixmap& frames, int count, int speed, 
     }
 }
 
-const QPixmap& AnimationManager::getCurrentFrame() {
+const QPixmap& AnimationManager::getCurrentFrame() const {
     return frames_[currentState_ / 9];
 }
 

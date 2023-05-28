@@ -9,6 +9,7 @@ void AbstractPlayer::addXp(int xp) {
     if (xp_ >= neededXp[level_]) {
         xp_ -= neededXp[level_];
         ++level_;
+        emit levelledUp();
     }
 }
 

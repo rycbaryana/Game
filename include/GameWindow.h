@@ -29,4 +29,5 @@ public:
 public slots:
     void pause();
     void unpause();
+    void startGame();
 };

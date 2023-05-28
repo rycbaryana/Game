@@ -1,4 +1,5 @@
 #include "View.h"
+#include "MenuScene.h"
 #include <QWheelEvent>
 
 void View::wheelEvent(QWheelEvent* event) {
@@ -12,11 +13,21 @@ View::View(QWidget* parent) : QGraphicsView(parent) {
     setFrameShape(QGraphicsView::NoFrame);
     setRenderHints(QPainter::Antialiasing| QPainter::SmoothPixmapTransform);
     setFocusPolicy(Qt::NoFocus);
-    scale(1, -1);
+    setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     const int maxSize = 10000;
+    auto* menu = new MenuScene(this);
+    setScene(menu);
     scene = new QGraphicsScene(-maxSize, -maxSize, 2 * maxSize, 2 * maxSize, this);
-    setScene(scene);
-    QPixmap bg;
-    bg.load(":/background.png");
-    scene->setBackgroundBrush(QBrush(bg.scaled(bg.size() * 1.5).transformed(QTransform::fromScale(1, -1))));
+    connect(menu, &MenuScene::start, [this] {
+        scale(1, -1);
+        setScene(scene);
+        hud->show();
+        emit gameStarted();
+        QPixmap bg;
+        bg.load(":/background.png");
+        scene->setBackgroundBrush(QBrush(bg.scaled(bg.size() * 1.5).transformed(QTransform::fromScale(1, -1))));
+    });
+    connect(menu, &MenuScene::exit, [this] {
+        exit(0);
+    });
 }

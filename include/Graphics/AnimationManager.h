@@ -12,7 +12,7 @@ public:
     AnimationManager(const QPixmap& frames, int count, int speed, int width, int height, int gap);
     AnimationManager(const QPixmap& sprite);
     AnimationManager() = default;
-    const QPixmap& getCurrentFrame();
+    const QPixmap& getCurrentFrame() const;
     bool isActive() const ;
     void nextFrame();
 };

@@ -1,24 +1,22 @@
 #include "Missile.h"
 #include <QPainter>
 
+
 void MissileProjectile::paint(
     QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget
 ) {
-    painter->setPen({Qt::red, 5});
-    painter->drawPath(shape());
+    painter->scale(1, -1);
+    painter->drawPixmap(boundingRect().topLeft(), animation_.getCurrentFrame().scaledToWidth(size).transformed(QTransform().rotateRadians(atan2(-getDirection().y(), getDirection().x()))));
 }
 
 QRectF MissileProjectile::boundingRect() const {
-    return QRectF(-size/2, -size/2, size, size);
+    auto height = animation_.getCurrentFrame().scaledToWidth(size).height();
+    return QRectF(-size/2, -height/2, size, height);
 }
 
-QPainterPath MissileProjectile::shape() const {
-    auto [x, y] = getDirection();
-    double angle = atan2(y, x);
-    QPointF bl = {0, 0};
-    QPainterPath shape(bl);
-    shape.lineTo(bl + size * QPointF(cos(angle), sin(angle)));
-    return shape;
+MissileProjectile::MissileProjectile(int damage, double speed, int pierce) : Projectile(damage, speed, 0, pierce) {
+    AnimationManager anim(QPixmap(":/missile_projectile.png"), 2, speed, 27, 15, 0);
+    setAnimation(anim);
 }
 
 Projectile* Missile::activateWeapon(const std::vector<Enemy*>& enemies) {
@@ -44,12 +42,12 @@ Missile::Missile(AbstractPlayer* player) {
     cooldown_ = 1000;
     amount_ = 1;
     delay_ = 100;
-    speed_ = 7;
+    speed_ = 4;
     level_ = 0;
     pirce_ = 1;
     player_ = player;
     sprite = QPixmap(":/Missile.png");
-    name = "Missile";
+    name = QObject::tr("Artemis Arrow");
 
     levelDescription.push_back(QObject::tr("Fires at the nearest enemy."));
     levelDescription.push_back(QObject::tr("Fires 1 more projectile."));

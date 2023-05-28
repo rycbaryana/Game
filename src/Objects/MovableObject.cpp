@@ -6,8 +6,10 @@ void MovableObject::setSpeed(double speed) {
 
 void MovableObject::setDirection(const QPointF& direction) {
     direction_ = direction;
-    if (!direction_.isNull())
-        sightDirection_ = direction;
+    if (!direction.isNull()) {
+        if (direction.x() != 0) sightDirection_.setX(direction.x());
+        sightDirection_.setY(direction.y());
+    }
 }
 
 double MovableObject::getSpeed() const {
@@ -22,7 +24,7 @@ void MovableObject::move() {
     move(speed_, direction_);
 }
 
-MovableObject::MovableObject() : speed_(), direction_() { }
+MovableObject::MovableObject() : speed_(), direction_(), sightDirection_(1, 0) { }
 
 void MovableObject::move(double speed, const QPointF& direction, bool animate) {
     auto length = vecLength(direction);

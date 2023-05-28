@@ -4,6 +4,19 @@
     "baseDamage" : 1,
     "maxHealth" : 10,
     "xp" : 10,
-    "speed" : 1
+    "speed" : 1,
+    "width" : 25,
+    "height" : 23,
+    "gap" : 0
+  },
+  {
+    "id" : 1,
+    "baseDamage" : 2,
+    "maxHealth" : 20,
+    "xp" : 2,
+    "speed" : 1,
+    "width" : 29,
+    "height" : 34,
+    "gap" : 1
   }
 ]

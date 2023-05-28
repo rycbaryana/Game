@@ -2,17 +2,23 @@
 #include "HpBar.h"
 #include "Missile.h"
 #include "Whip.h"
+#include "Knife.h"
+#include "Lightning.h"
 #include <QPainter>
 
 Player::Player() : AbstractPlayer() {
     speed_ = 2;
 
     weapons_.push_back(std::make_shared<Whip>(this));
+    weapons_.push_back(std::make_shared<Lightning>(this));
+    weapons_.push_back(std::make_shared<Knife>(this));
     weapons_.push_back(std::make_shared<Missile>(this));
     weapons_.front()->levelUp();
 
-    passives_.push_back(std::make_shared<PassiveUpgrade>(Damage, this));
-    passives_.push_back(std::make_shared<PassiveUpgrade>(Amount, this));
+
+    for (int i = 0; i < 4; ++i) {
+        passives_.push_back(std::make_shared<PassiveUpgrade>(static_cast<UpgradeType>(i), this));
+    }
 
     AnimationManager anim(QPixmap(":/Antonio.png"), 4, speed_, 32, 34, 4);
     setAnimation(anim);
@@ -25,9 +31,8 @@ void Player::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QW
     //    painter->setPen({Qt::black, 2});
     //    painter->drawRect(boundingRect());
     painter->scale(1, -1);
-    QTransform inverse(sightDirection_.x() == 0 ? 1 : sightDirection_.x(), 0, 0, 0, 1, 0, 0, 0, 1);
     painter->drawPixmap(
-        boundingRect().topLeft(), animation_.getCurrentFrame().transformed(inverse).scaled(47, 50)
+        boundingRect().topLeft(), animation_.getCurrentFrame().transformed(QTransform::fromScale(sightDirection_.x() >= 0 ? 1 : -1, 1)).scaled(47, 50)
     );
 }
 

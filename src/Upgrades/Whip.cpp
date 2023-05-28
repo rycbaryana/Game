@@ -12,14 +12,14 @@ Whip::Whip(AbstractPlayer* player) {
     pirce_ = 0;
     duration_ = 150;
     sprite = QPixmap(":/Whip.png");
-    name = "Whip";
+    name = QObject::tr("Nemesis Whip");
     player_ = player;
 
     levelDescription.push_back(
-        QObject::tr("Attacks horizontally, passes through enemies. Make them cry.")
+        QObject::tr("Attacks horizontally, pierces enemies.")
     );
     levelDescription.push_back(QObject::tr("Fires 1 more projectile."));
-    levelDescription.push_back(QObject::tr("Base Damage up by 5"));
+    levelDescription.push_back(QObject::tr("Base Damage up by 5."));
     levelDescription.push_back(QObject::tr("Base Damage up by 5."));
     levelDescription.push_back(QObject::tr("Base Damage up by 5."));
     levelDescription.push_back(QObject::tr("Base Damage up by 5."));
@@ -86,10 +86,4 @@ WhipProjectile::WhipProjectile(int damage, double speed, int duration, int pierc
     : Projectile(damage, speed, duration, pierce) {
     AnimationManager anim(QPixmap(":/slash.png"));
     setAnimation(anim);
-}
-
-QPainterPath WhipProjectile::shape() const {
-    QPainterPath path;
-    path.addRect(boundingRect());
-    return path;
 }
