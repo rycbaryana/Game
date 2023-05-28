@@ -17,6 +17,7 @@
     <file alias="passive.png">assets/weapons/passive.png</file>
     <file alias="enemy_0.png">assets/enemies/enemy_0.png</file>
     <file alias="enemy_1.png">assets/enemies/enemy_1.png</file>
+    <file alias="enemy_2.png">assets/enemies/enemy_2.png</file>
     <file alias="ost0.mp3">assets/sounds/ost0.mp3</file>
     <file alias="ost1.mp3">assets/sounds/ost1.mp3</file>
     <file alias="ost2.mp3">assets/sounds/ost2.mp3</file>

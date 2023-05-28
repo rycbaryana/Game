@@ -1,7 +1,7 @@
 [
   {
     "delay" : 1000,
-    "minAmount" : 15,
+    "minAmount" : 50,
     "enemies" : [
       0
     ]
@@ -11,6 +11,27 @@
     "minAmount" : 50,
     "enemies" : [
       0, 1
+    ]
+  },
+  {
+    "delay" : 500,
+    "minAmount" : 150,
+    "enemies" : [
+      0, 1, 2
+    ]
+  },
+  {
+    "delay" : 200,
+    "minAmount" : 150,
+    "enemies" : [
+      1, 2
+    ]
+  },
+  {
+    "delay" : 100,
+    "minAmount" : 200,
+    "enemies" : [
+       2
     ]
   }
 ]
