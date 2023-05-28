@@ -19,6 +19,7 @@ jobs:
         version : '6.4.2'
         install-deps: 'true'
         cache : 'true'
+        modules: 'qtmultimedia'
     - uses: actions/checkout@v3
 
     - name: Configure CMake
