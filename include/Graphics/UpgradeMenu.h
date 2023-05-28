@@ -4,7 +4,7 @@
 #include "UpgradeOption.h"
 
 class UpgradeMenu : public QObject, public QGraphicsItem {
-    int width = 400;
+    int width = 600;
     int height = 500;
     Q_OBJECT
 public:

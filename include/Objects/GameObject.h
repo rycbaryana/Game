@@ -6,7 +6,6 @@ protected:
     GameObject();
     explicit GameObject(const QPointF& pos);
     QPointF pos_;
-    QPixmap sprite_;
 public:
     void setPosition(double x, double y);
     void setPosition(const QPointF& pos);

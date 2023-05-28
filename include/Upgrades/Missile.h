@@ -9,10 +9,9 @@ public:
 };
 
 class MissileProjectile : public Projectile {
-    const int size = 20;
+    const int size = 30;
 public:
-    MissileProjectile(int damage, double speed, int pierce) : Projectile(damage, speed, 0, pierce) {};
+    MissileProjectile(int damage, double speed, int pierce);
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
     QRectF boundingRect() const override;
-    QPainterPath shape() const override;
 };

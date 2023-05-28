@@ -32,8 +32,8 @@ void UpgradeMenu::paint(
     painter->setBrush(QColor(75, 79, 116));
     painter->setPen({QColor(255, 204, 0), 3});
     painter->drawRect(boundingRect());
-    QString lvlUp = "Level Up!";
-    QString text = "Choose one upgrade";
+    QString lvlUp = tr("Level Up!");
+    QString text = tr("Choose one upgrade");
     painter->setFont(QFont(painter->font().family(), 15));
     painter->setPen({Qt::black, 1});
     painter->drawText(-painter->fontMetrics().horizontalAdvance(lvlUp) / 2,-height / 2 + painter->fontMetrics().height(), lvlUp);
@@ -46,6 +46,9 @@ QRectF UpgradeMenu::boundingRect() const {
 
 void UpgradeMenu::showMenu() {
     generateUpgrades();
+    if (options_.empty()) {
+        return ;
+    }
     show();
     emit pause();
 }

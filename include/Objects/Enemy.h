@@ -5,7 +5,8 @@
 
 class Enemy : public Creature {
     const int delay_ = 200;
-
+    int width_;
+    int height_;
     int baseDamage_;
     int xp_;
     int id_;

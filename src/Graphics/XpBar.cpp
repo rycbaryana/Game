@@ -13,8 +13,9 @@ void XpBar::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWi
     painter->drawRect(xpRect);
     painter->setPen(Qt::black);
     painter->setFont(QFont("times", 15));
-    QString levelString = QString("Level %1").arg(player_->getLevel());
-    painter->drawText(QPointF(width_ / 2 - painter->fontMetrics().horizontalAdvance(levelString) / 2, height_),
+    QString levelString = QObject::tr("Level %1").arg(player_->getLevel());;
+    painter->setPen(Qt::gray);
+    painter->drawText(width_ / 2 - painter->fontMetrics().horizontalAdvance(levelString) / 2, height_ / 2 + painter->font().pointSize() / 2.,
         levelString
     );
 }

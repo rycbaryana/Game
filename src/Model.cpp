@@ -37,7 +37,7 @@ void Model::updateModel() {
     auto pred = [](auto* obj){return obj == nullptr;};
     for (auto*& projectile : projectiles) {
         projectile->move();
-        if (vecLength(projectile->getPos() - player->getPos()) > sqrt(2) * qMax(width, height) || projectile->hasExpired()) {
+        if (vecLength(projectile->getPos() - player->getPos()) > (projectiles.size() > 40 ? width / 3 : width / 2) || projectile->hasExpired()) {
             delete projectile;
             projectile = nullptr;
             continue;
@@ -49,8 +49,7 @@ void Model::updateModel() {
                 auto* enemy = collidingEnemies[i];
                 enemy->damage(projectile->getDamage());
                 if (!enemy->isAlive()) {
-                    erase_if(enemies, [enemy](auto* obj) {return enemy == obj;});
-                    delete enemy;
+                    ++player->kills;
                 }
                 projectile->increasePierced();
             }
@@ -60,7 +59,15 @@ void Model::updateModel() {
             }
         }
     }
+    std::for_each(enemies.begin(), enemies.end(), [](auto*& enemy) {
+        if (!enemy->isAlive()) {
+            delete enemy;
+            enemy = nullptr;
+        }
+    });
+    erase_if(enemies, pred);
     erase_if(projectiles, pred);
+
 }
 
 void Model::itemPickUp(Item* item) {
@@ -106,6 +113,9 @@ void Model::loadEnemies() {
         enemiesTable[i].push_back(enemy["maxHealth"].toInt());
         enemiesTable[i].push_back(enemy["speed"].toDouble());
         enemiesTable[i].push_back(enemy["xp"].toInt());
+        enemiesTable[i].push_back(enemy["width"].toInt());
+        enemiesTable[i].push_back(enemy["height"].toInt());
+        enemiesTable[i].push_back(enemy["gap"].toInt());
     }
     enemiesFile.close();
 }

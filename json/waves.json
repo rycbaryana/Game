@@ -8,9 +8,9 @@
   },
   {
     "delay" : 1000,
-    "minAmount" : 20,
+    "minAmount" : 50,
     "enemies" : [
-      0
+      0, 1
     ]
   }
 ]

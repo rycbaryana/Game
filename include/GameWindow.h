@@ -13,7 +13,6 @@ public:
     GameWindow();
     void keyPressEvent(QKeyEvent* event) override;
     void keyReleaseEvent(QKeyEvent* event) override;
-    void mousePressEvent(QMouseEvent* event) override;
     void resizeEvent(QResizeEvent* event) override;
     void updateFrame();
     void setWave(const Wave& wave);
@@ -29,4 +28,5 @@ public:
 public slots:
     void pause();
     void unpause();
+    void startGame();
 };

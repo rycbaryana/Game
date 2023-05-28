@@ -3,11 +3,11 @@
 PassiveUpgrade::PassiveUpgrade(UpgradeType type, AbstractPlayer* player) : type_(type) {
     player_ = player;
     maxLevel = type == Amount ? 2 : 5;
-    QMap<UpgradeType, QString> typeName = {{Damage, "Damage"}, {Amount, "Amount"}};
-    QMap<UpgradeType, QString> typeDescription = {{Damage, "Raises inflicted damage by 10%."}, {Amount, {"Shoots additional projectile."}}};
-    name = typeName[type];
-    sprite = QPixmap(":/Whip.png");
-    levelDescription.insert(levelDescription.begin(), maxLevel, typeDescription[type]);
+    std::vector<QString> names = {QObject::tr("Damage"), QObject::tr("Amount"), QObject::tr("Max Health"), QObject::tr("Cooldown")};
+    std::vector<QString> descriptions = {QObject::tr("Raises inflicted damage by 10%."), QObject::tr("Shoots additional projectile."), QObject::tr("Max health increases by 20."), QObject::tr("Reduces all cooldown by 8%.")};
+    name = names[type];
+    sprite = QPixmap(":/passive.png");
+    levelDescription.insert(levelDescription.begin(), maxLevel, descriptions[type]);
 }
 
 void PassiveUpgrade::levelUp() {
@@ -23,7 +23,7 @@ void PassiveUpgrade::levelUp() {
             player_->addMaxHealth(20);
             break ;
         case Cooldown:
-            player_->cooldownReduction += 0.1;
+            player_->cooldownReduction += 0.08;
             break ;
     }
 }

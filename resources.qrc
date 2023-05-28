@@ -3,7 +3,6 @@
     <file>json/enemies.json</file>
     <file>json/waves.json</file>
     <file alias="Antonio.png">assets/player/Antonio.png</file>
-    <file alias="enemy_0.png">assets/enemies/enemy_0.png</file>
     <file alias="background.png">assets/level/background.png</file>
     <file alias="xp1.png">assets/player/xp1.png</file>
     <file alias="xp2.png">assets/player/xp2.png</file>
@@ -13,5 +12,21 @@
     <file alias="frame_small.png">assets/ui/frame_small.png</file>
     <file alias="arrow.png">assets/ui/arrow.png</file>
     <file alias="slash.png">assets/weapons/slash.png</file>
+    <file alias="missile_projectile.png">assets/weapons/missile_projectile.png</file>
+    <file alias="counter.png">assets/ui/counter.png</file>
+    <file alias="passive.png">assets/weapons/passive.png</file>
+    <file alias="enemy_0.png">assets/enemies/enemy_0.png</file>
+    <file alias="enemy_1.png">assets/enemies/enemy_1.png</file>
+    <file alias="ost0.mp3">assets/sounds/ost0.mp3</file>
+    <file alias="ost1.mp3">assets/sounds/ost1.mp3</file>
+    <file alias="ost2.mp3">assets/sounds/ost2.mp3</file>
+    <file alias="button.png">assets/ui/button.png</file>
+    <file alias="button_p.png">assets/ui/button_p.png</file>
+    <file alias="button_e.png">assets/ui/button_e.png</file>
+    <file alias="Knife.png">assets/weapons/Knife.png</file>
+    <file alias="Lightning.png">assets/weapons/Lightning.png</file>
+    <file alias="lightning_rod.png">assets/weapons/lightning_rod.png</file>
+    <file alias="lightning_projectile.png">assets/weapons/lightning_projectile.png</file>
+    <file alias="menu.png">assets/ui/menu.png</file>
 </qresource>
 </RCC>
